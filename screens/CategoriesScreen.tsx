@@ -1,4 +1,11 @@
-import { Button, FlatList, StyleSheet, Text, View } from 'react-native';
+import {
+  Button,
+  FlatList,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View,
+} from 'react-native';
 import React from 'react';
 import { RootStackParams } from '../navigator/MealsNavigator';
 import { ScreenStackProps } from 'react-native-screens';
@@ -8,27 +15,21 @@ import { ROUTES } from '../navigator/ROUTES';
 import CategoryMealsScreen from './CategoryMealsScreen';
 import { CATEGORIES } from '../data/15.1 dummy-data';
 import { Category } from '../models/category';
-
-const renderGridItem = (itemData: Category) => {
-  return (
-    <View style={{ flex: 1 }}>
-      <Text>{itemData.title}</Text>
-    </View>
-  );
-};
+import { NavigationProp, useNavigation } from '@react-navigation/native';
+import RenderGridItem from '../components/RenderGridItem';
 
 type CategoriesScreenProps = NativeStackScreenProps<
   RootStackParams,
   typeof ROUTES.CATEGORIES_SCREEN
 >;
-const CategoriesScreen = ({ navigation }: CategoriesScreenProps) => {
+const CategoriesScreen = (props: CategoriesScreenProps) => {
   return (
     <View style={{ flex: 1 }}>
       <FlatList
         style={{ flex: 1 }}
         data={CATEGORIES}
         keyExtractor={(_, idx) => idx.toString()}
-        renderItem={({ item }) => renderGridItem(item)}
+        renderItem={({ item }) => <RenderGridItem itemData={item} />}
         numColumns={2}
       ></FlatList>
     </View>

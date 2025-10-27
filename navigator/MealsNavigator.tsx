@@ -7,7 +7,9 @@ import CategoryMealsScreen from '../screens/CategoryMealsScreen';
 import MealDetailScreen from '../screens/MealDetailScreen';
 export type RootStackParams = {
   [ROUTES.CATEGORIES_SCREEN]: {};
-  [ROUTES.CATEGORY_MEALS_SCREEN]: {};
+  [ROUTES.CATEGORY_MEALS_SCREEN]: {
+    categoryId: string;
+  };
   [ROUTES.MEAL_DETAIL_SCREEN]: {};
 };
 const Stack = createNativeStackNavigator<RootStackParams>();
@@ -17,6 +19,15 @@ const MealsNavigator = () => {
       <Stack.Screen
         name={ROUTES.CATEGORIES_SCREEN}
         component={CategoriesScreen}
+        options={{
+          headerTitle: 'Categories Screen',
+          headerTitleAlign: 'center',
+          headerStyle: {
+            backgroundColor: 'purple',
+          },
+
+          headerTintColor: 'white',
+        }}
       ></Stack.Screen>
       <Stack.Screen
         name={ROUTES.CATEGORY_MEALS_SCREEN}

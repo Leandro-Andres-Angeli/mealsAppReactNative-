@@ -4,13 +4,20 @@ import CategoriesScreen from './CategoriesScreen';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { RootStackParams } from '../navigator/MealsNavigator';
 import { ROUTES } from '../navigator/ROUTES';
+import { CATEGORIES } from '../data/15.1 dummy-data';
 type CategoryMealsScreenProps = NativeStackScreenProps<
   RootStackParams,
   typeof ROUTES.CATEGORY_MEALS_SCREEN
 >;
-const CategoryMealsScreen = ({ navigation }: CategoryMealsScreenProps) => {
+const CategoryMealsScreen = ({
+  route,
+  navigation,
+}: CategoryMealsScreenProps) => {
+  const { categoryId } = route.params;
+  const selectedCategory = CATEGORIES.find((el) => el.id === categoryId);
   return (
     <View>
+      {selectedCategory && <Text> {selectedCategory.title}</Text>}
       <Text>CategoryMealsScreen</Text>
       <Button
         title='Navigate'
