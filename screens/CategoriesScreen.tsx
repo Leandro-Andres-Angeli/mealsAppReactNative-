@@ -23,13 +23,29 @@ type CategoriesScreenProps = NativeStackScreenProps<
   typeof ROUTES.CATEGORIES_SCREEN
 >;
 const CategoriesScreen = (props: CategoriesScreenProps) => {
+  const navigation =
+    useNavigation<
+      NavigationProp<RootStackParams, typeof ROUTES.CATEGORIES_SCREEN>
+    >();
+  const onSelect = (id: any) =>
+    navigation.navigate(ROUTES.CATEGORY_MEALS_SCREEN, {
+      categoryId: id,
+    });
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: 'yellow' }}>
       <FlatList
-        style={{ flex: 1 }}
+        style={{
+          flex: 1,
+
+          backgroundColor: 'blue',
+          width: '100%',
+          height: '100%',
+        }}
         data={CATEGORIES}
         keyExtractor={(_, idx) => idx.toString()}
-        renderItem={({ item }) => <RenderGridItem itemData={item} />}
+        renderItem={({ item }) => (
+          <RenderGridItem itemData={item} {...{ onSelect }} />
+        )}
         numColumns={2}
       ></FlatList>
     </View>

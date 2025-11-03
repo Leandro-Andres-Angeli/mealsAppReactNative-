@@ -2,25 +2,45 @@ import { NavigationProp, useNavigation } from '@react-navigation/native';
 import { Category } from '../models/category';
 import { RootStackParams } from '../navigator/MealsNavigator';
 import { ROUTES } from '../navigator/ROUTES';
-import { Text, TouchableOpacity, View } from 'react-native';
-const RenderGridItem = ({ itemData }: { itemData: Category }) => {
-  const navigation =
-    useNavigation<
-      NavigationProp<RootStackParams, typeof ROUTES.CATEGORIES_SCREEN>
-    >();
+import {
+  Platform,
+  Text,
+  TouchableNativeFeedback,
+  TouchableOpacity,
+  View,
+} from 'react-native';
+
+interface RenderGridItemProps {
+  itemData: Category;
+  onSelect: (id: any) => void;
+}
+const RenderGridItem = ({ itemData, onSelect }: RenderGridItemProps) => {
+  let TouchableComp: typeof TouchableOpacity | typeof TouchableNativeFeedback;
+  if (Platform.OS === 'android') {
+    TouchableComp = TouchableNativeFeedback;
+  } else {
+    TouchableComp = TouchableOpacity;
+  }
   return (
-    <TouchableOpacity
-      style={{ flex: 1 }}
-      onPress={() =>
-        navigation.navigate(ROUTES.CATEGORY_MEALS_SCREEN, {
-          categoryId: itemData.id,
-        })
-      }
-    >
-      <View>
-        <Text>{itemData.title}</Text>
+    <TouchableComp onPress={() => onSelect(itemData.id)} style={{}}>
+      <View
+        style={{
+          alignContent: 'center',
+          backgroundColor: itemData.color,
+          paddingVertical: 50,
+          height: '100%',
+          position: 'relative',
+          minWidth: '50%',
+        }}
+      >
+        <Text
+          numberOfLines={2}
+          style={{ textAlign: 'right', fontFamily: 'open-sans', fontSize: 30 }}
+        >
+          {itemData.title}
+        </Text>
       </View>
-    </TouchableOpacity>
+    </TouchableComp>
   );
 };
 export default RenderGridItem;

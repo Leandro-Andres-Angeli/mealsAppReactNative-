@@ -5,7 +5,11 @@ import * as SplashScreen from 'expo-splash-screen';
 import { useEffect } from 'react';
 import MealsNavigator from './navigator/MealsNavigator';
 import { NavigationContainer } from '@react-navigation/native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { enableScreens } from 'react-native-screens';
+import { Provider } from 'react-native-paper';
 SplashScreen.preventAutoHideAsync();
+enableScreens();
 export default function App() {
   const [loaded, error] = useFonts({
     'open-sans-bold': require('./assets/fonts/OpenSans-Bold.ttf'),
@@ -21,9 +25,13 @@ export default function App() {
     return null;
   }
   return (
-    <NavigationContainer>
-      <MealsNavigator></MealsNavigator>
-    </NavigationContainer>
+    <Provider>
+      <SafeAreaView style={{ flex: 1 }}>
+        {/* <NavigationContainer> */}
+        <MealsNavigator></MealsNavigator>
+        {/* </NavigationContainer> */}
+      </SafeAreaView>
+    </Provider>
   );
 }
 
